@@ -1,0 +1,29 @@
+name: tree_plantation_mobile
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  get: 4.6.3
+  flutter:
+    sdk: flutter
+  dio: ^4.0.6
+  logger: ^1.1.0
+  google_fonts: ^2.3.2
+  unicons: ^2.1.0
+  url_launcher: ^6.1.2
+  flutter_svg: ^1.0.3
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
