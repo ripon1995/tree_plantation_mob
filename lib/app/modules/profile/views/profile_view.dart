@@ -40,7 +40,7 @@ class ProfileView extends GetView<ProfileController> {
                   customTextField("mobile", Icons.phone_android_outlined, 11),
                   customTextField("email", Icons.email_outlined, 20),
                   customTextField("password", Icons.password_outlined, 20),
-                  customElevatedButton("Next"),
+                  customElevatedButton("Next!"),
                   const SizedBox(
                     height: 10,
                   ),
