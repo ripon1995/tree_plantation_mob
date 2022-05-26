@@ -48,17 +48,25 @@ class SignupView extends GetView<SignupController> {
                   const SizedBox(
                     height: 20,
                   ),
-                  customTextField("name", Icons.person, 20),
-                  customTextField("username", Icons.person_outlined, 20),
-                  customTextField("phone", Icons.phone_android_outlined, 11),
-                  customTextField("email", Icons.email_outlined, 20),
-                  customTextField("password", Icons.lock_outlined, 20),
-                  customTextField("retype password", Icons.repeat, 20),
+                  customTextField(
+                      "name", Icons.person, 20, controller.nameController),
+                  customTextField("username", Icons.person_outlined, 20,
+                      controller.usernameController),
+                  customTextField("phone", Icons.phone_android_outlined, 11,
+                      controller.phoneController),
+                  customTextField("email", Icons.email_outlined, 20,
+                      controller.emailController),
+                  customTextField("password", Icons.lock_outlined, 20,
+                      controller.passwordController),
+                  customTextField("retype password", Icons.repeat, 20,
+                      controller.retypePasswordController),
                   SizedBox(
                     height: 10,
                   ),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.signup();
+                    },
                     child: Text(
                       "Signup",
                       style: TextStyle(color: Colors.white, fontSize: 16),

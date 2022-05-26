@@ -37,13 +37,17 @@ class LoginView extends GetView<LoginController> {
               const SizedBox(
                 height: 20,
               ),
-              customTextField("username", Icons.person_outlined, 20),
-              customTextField("password", Icons.lock_outline, 20),
+              customTextField("username", Icons.person_outlined, 20,
+                  controller.usernameController),
+              customTextField("password", Icons.lock_outline, 20,
+                  controller.passwordController),
               SizedBox(
                 height: 10,
               ),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.login();
+                },
                 child: Text(
                   "Next",
                   style: TextStyle(color: Colors.white, fontSize: 16),
