@@ -44,8 +44,9 @@ class SignupView extends GetView<SignupController> {
               const SizedBox(
                 height: 20,
               ),
+              customTextField("name", Icons.person, 20),
               customTextField("username", Icons.person_outlined, 20),
-              customTextField("mobile", Icons.phone_android_outlined, 11),
+              customTextField("phone", Icons.phone_android_outlined, 11),
               customTextField("email", Icons.email_outlined, 20),
               customTextField("password", Icons.lock_outlined, 20),
               customTextField("retype password", Icons.repeat, 20),
