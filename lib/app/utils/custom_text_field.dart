@@ -15,16 +15,3 @@ Widget customTextField(String data, IconData icon, int maxLen) {
     ),
   );
 }
-
-Widget customElevatedButton(String text) {
-  return Container(
-    width: 100,
-    child: ElevatedButton(
-        onPressed: () {},
-        child: Text(text,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.bold))),
-  );
-}
