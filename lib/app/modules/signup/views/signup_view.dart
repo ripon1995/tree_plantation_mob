@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/modules/signup/controllers/signup_controller.dart';
 import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
-import 'package:tree_plantation_mobile/app/utils/custom_back_button.dart';
-import 'package:tree_plantation_mobile/app/utils/custom_button_style.dart';
-import 'package:tree_plantation_mobile/app/utils/custom_text_field.dart';
+import 'package:tree_plantation_mobile/app/core/utils/custom_back_button.dart';
+import 'package:tree_plantation_mobile/app/core/utils/custom_button_style.dart';
+import 'package:tree_plantation_mobile/app/core/utils/custom_text_field.dart';
 
 class SignupView extends GetView<SignupController> {
   @override
