@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tree_plantation_mobile/app/data/model/request/sign_up_request.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth_repository_impl.dart';
 
 class SignupController extends GetxController {
   final count = 0.obs;
-
+  RxBool isSignUpSuccessful = false.obs;
   // Text editing controller
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -11,6 +14,8 @@ class SignupController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController retypePasswordController = TextEditingController();
+
+  AuthRepository _authRepository = AuthRepositoryImpl();
 
   @override
   void onInit() {
@@ -35,6 +40,14 @@ class SignupController extends GetxController {
     String email = emailController.text.toString();
     String password = passwordController.text.toString();
     String repass = retypePasswordController.text.toString();
+
+    SignUpRequest signUpRequest = SignUpRequest(name, username, email, phone, password);
+    var signUpResponse = _authRepository.signUp(signUpRequest);
+    signUpResponse.then((value) {
+      if(value.message == "success") {
+        isSignUpSuccessful.value = true;
+      }
+    });
     print(name);
   }
 }

@@ -7,7 +7,7 @@ import 'package:tree_plantation_mobile/flavors/environment.dart';
 void main() {
   EnvConfig devConfig = EnvConfig(
     appName: "Tree plantation Dev",
-    baseUrl: "",
+    baseUrl: "http://172.16.227.86:8000",
     shouldCollectCrashLog: true,
   );
 

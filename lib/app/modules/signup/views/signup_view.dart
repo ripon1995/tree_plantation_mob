@@ -54,7 +54,7 @@ class SignupView extends GetView<SignupController> {
                       controller.usernameController),
                   customTextField("phone", Icons.phone_android_outlined, 11,
                       controller.phoneController),
-                  customTextField("email", Icons.email_outlined, 20,
+                  customTextField("email", Icons.email_outlined, 30,
                       controller.emailController),
                   customTextField("password", Icons.lock_outlined, 20,
                       controller.passwordController),
@@ -66,6 +66,9 @@ class SignupView extends GetView<SignupController> {
                   OutlinedButton(
                     onPressed: () {
                       controller.signup();
+                      if(controller.isSignUpSuccessful.value == true) {
+                        Get.toNamed(Routes.LOGIN);
+                      }
                     },
                     child: Text(
                       "Signup",
