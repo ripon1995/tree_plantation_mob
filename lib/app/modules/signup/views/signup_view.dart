@@ -66,9 +66,6 @@ class SignupView extends GetView<SignupController> {
                   OutlinedButton(
                     onPressed: () {
                       controller.signup();
-                      if(controller.isSignUpSuccessful.value == true) {
-                        Get.toNamed(Routes.LOGIN);
-                      }
                     },
                     child: Text(
                       "Signup",

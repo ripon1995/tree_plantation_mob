@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/model/request/sign_up_request.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository_impl.dart';
+import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
 
 class SignupController extends GetxController {
   final count = 0.obs;
   RxBool isSignUpSuccessful = false.obs;
+
   // Text editing controller
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -41,12 +43,15 @@ class SignupController extends GetxController {
     String password = passwordController.text.toString();
     String repass = retypePasswordController.text.toString();
 
-    SignUpRequest signUpRequest = SignUpRequest(name, username, email, phone, password);
+    SignUpRequest signUpRequest =
+        SignUpRequest(name, username, email, phone, password);
     var signUpResponse = _authRepository.signUp(signUpRequest);
     signUpResponse.then((value) {
-      if(value.message == "success") {
-        isSignUpSuccessful.value = true;
-      }
+      // if the registration is successful then it will show the snack bar and navigate to the login page
+      if (value.message == "success")
+        Get.snackbar("Congratulation", "Registration Successful",
+            snackPosition: SnackPosition.BOTTOM);
+      Get.toNamed(Routes.LOGIN);
     });
     print(name);
   }
