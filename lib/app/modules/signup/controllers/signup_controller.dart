@@ -48,10 +48,14 @@ class SignupController extends GetxController {
     var signUpResponse = _authRepository.signUp(signUpRequest);
     signUpResponse.then((value) {
       // if the registration is successful then it will show the snack bar and navigate to the login page
-      if (value.message == "success")
+      if (value.message == "success"){
         Get.snackbar("Congratulation", "Registration Successful",
             snackPosition: SnackPosition.BOTTOM);
-      Get.toNamed(Routes.LOGIN);
+        Get.toNamed(Routes.LOGIN);
+      }
+      else if(value.message == "fail"){
+        Get.snackbar("Invalidate data!", "Registration failed",snackPosition: SnackPosition.BOTTOM);
+      }
     });
     print(name);
   }
