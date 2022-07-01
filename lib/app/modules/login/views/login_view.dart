@@ -37,8 +37,8 @@ class LoginView extends GetView<LoginController> {
               const SizedBox(
                 height: 20,
               ),
-              customTextField("username", Icons.person_outlined, 20,
-                  controller.usernameController),
+              customTextField("email", Icons.email_outlined, 20,
+                  controller.emailController),
               customTextField("password", Icons.lock_outline, 20,
                   controller.passwordController),
               SizedBox(

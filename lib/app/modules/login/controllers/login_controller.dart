@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final count = 0.obs;
@@ -20,11 +20,8 @@ class LoginController extends GetxController {
   @override
   void onClose() {}
 
-  void increment() => count.value++;
-
   void login() {
-    String username = usernameController.text.toString();
+    String username = emailController.text.toString();
     String password = passwordController.text.toString();
-    print(username);
   }
 }
