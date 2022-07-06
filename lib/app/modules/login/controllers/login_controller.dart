@@ -14,6 +14,8 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  RxBool isLoginSuccessful = RxBool(false);
+
   final count = 0.obs;
 
   @override
@@ -50,6 +52,7 @@ class LoginController extends GetxController {
     Log.debug("Token saved in preference manager");
     Log.debug("Access token : $access");
     Log.debug("Refresh token : $refresh");
+    isLoginSuccessful(true);
   }
 
   void clearSharedPreferenceValue() async {

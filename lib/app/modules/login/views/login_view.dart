@@ -47,6 +47,9 @@ class LoginView extends GetView<LoginController> {
               OutlinedButton(
                 onPressed: () {
                   controller.login();
+                  if(controller.isLoginSuccessful.isTrue) {
+                    Get.toNamed(Routes.HOME);
+                  }
                 },
                 child: Text(
                   "Next",
