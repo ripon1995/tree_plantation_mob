@@ -7,7 +7,7 @@ import 'package:tree_plantation_mobile/flavors/environment.dart';
 void main() {
   EnvConfig prodConfig = EnvConfig(
     appName: "Tree Plantation Prod",
-    baseUrl: "",
+    baseUrl: "https://treeplantation-backend.herokuapp.com",
     shouldCollectCrashLog: true,
   );
 
