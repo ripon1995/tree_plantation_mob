@@ -15,7 +15,7 @@ class AuthRemoteSourceImpl extends BaseRemoteSource
 
   @override
   Future<SignUpResponse> signUp(SignUpRequest signUpRequest) {
-    var endpoint = "${DioProvider.baseUrl}/customers/signup/";
+    var endpoint = "${DioProvider.baseUrl}/auth/users/";
     String json = jsonEncode(signUpRequest);
     var dioCall = dioClient.post(endpoint, data: json);
 
