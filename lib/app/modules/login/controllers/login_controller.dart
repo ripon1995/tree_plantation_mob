@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
 import 'package:tree_plantation_mobile/app/data/model/request/login_request.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
-import 'package:tree_plantation_mobile/app/data/repository/auth_repository_impl.dart';
 import 'package:tree_plantation_mobile/app/log.dart';
 
 class LoginController extends GetxController {
-  AuthRepository _authRepository = AuthRepositoryImpl();
-  PreferenceManager _preferenceManager = Get.find();
+  final AuthRepository _authRepository =
+      Get.find(tag: (AuthRepository).toString());
+  PreferenceManager _preferenceManager =
+      Get.find(tag: (PreferenceManager).toString());
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -34,12 +35,25 @@ class LoginController extends GetxController {
 
     LoginRequest loginRequest = LoginRequest(email, password);
     var loginResponse = _authRepository.login(loginRequest);
-    loginResponse.then((value) {
-      _preferenceManager.setString("accessToken", value.accessToken!);
-      _preferenceManager.setString("refreshToken", value.refreshToken!);
-      Log.debug("Token saved in preference manager");
-      Log.debug("Access token : ${_preferenceManager.getString("accessToken")}");
-      Log.debug("Refresh token : ${_preferenceManager.getString("refreshToken")}");
+    loginResponse.then((value) async {
+      setSharedPreferenceValue(value);
     });
+  }
+
+  void setSharedPreferenceValue(dynamic value) async {
+    await _preferenceManager.setString("accessToken", value.accessToken!);
+    await _preferenceManager.setString("refreshToken", value.refreshToken!);
+    dynamic access = await _preferenceManager.getString("accessToken");
+    dynamic refresh = await _preferenceManager.getString("refreshToken");
+    Log.debug("Token saved in preference manager");
+    Log.debug(
+        "Access token : $access");
+    Log.debug(
+        "Refresh token : $refresh");
+  }
+
+  void clearSharedPreferenceValue() async {
+    _preferenceManager.remove("accessToken");
+    _preferenceManager.remove("refreshToken");
   }
 }
