@@ -24,7 +24,7 @@ class HomeView extends GetView<HomeController> {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.only(left: 20),
             ),
-            horizontalListView(),
+            horizontalListView(context),
           ],
         ),
       ),
