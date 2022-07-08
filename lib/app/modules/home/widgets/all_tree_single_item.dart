@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget allTree(String imageLink) {
+Widget allTreeSingleItem(String imageLink) {
   return Card(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(30),
