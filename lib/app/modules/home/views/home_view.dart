@@ -16,7 +16,7 @@ class HomeView extends GetView<HomeController> {
             profileInfo(),
             SizedBox(height: 20,),
             Container(child: Text("All Trees",style: GoogleFonts.lato(fontWeight: FontWeight.bold,fontSize: 30)),alignment: Alignment.topLeft,margin: EdgeInsets.only(left: 20),),
-            allTree(),
+            allTree("assets/images/test-image.png"),
           ],
         ),
       ),
