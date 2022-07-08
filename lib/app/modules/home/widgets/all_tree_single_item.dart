@@ -6,12 +6,6 @@ Widget allTreeSingleItem(String imageLink) {
       borderRadius: BorderRadius.circular(30),
     ),
     color: Colors.white70,
-    child: SizedBox(
-      height: 250,
-      width: 250,
-      child: Container(
-        child: Image.asset(imageLink),
-      ),
-    ),
+    child: Image.asset(imageLink),
   );
 }
