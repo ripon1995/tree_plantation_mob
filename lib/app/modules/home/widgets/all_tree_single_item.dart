@@ -7,12 +7,10 @@ Widget allTreeSingleItem(String imageLink) {
     ),
     color: Colors.white70,
     child: SizedBox(
-      height: 200,
-      width: 200,
+      height: 250,
+      width: 250,
       child: Container(
         child: Image.asset(imageLink),
-        height: 50,
-        width: 50,
       ),
     ),
   );
