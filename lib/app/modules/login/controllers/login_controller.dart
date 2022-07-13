@@ -4,6 +4,7 @@ import 'package:tree_plantation_mobile/app/data/local/preference/preference_mana
 import 'package:tree_plantation_mobile/app/data/model/request/login_request.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
 import 'package:tree_plantation_mobile/app/log.dart';
+import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   final AuthRepository _authRepository =
@@ -38,11 +39,11 @@ class LoginController extends GetxController {
     LoginRequest loginRequest = LoginRequest(email, password);
     var loginResponse = _authRepository.login(loginRequest);
     loginResponse.then((value) async {
-      setSharedPreferenceValue(value);
+      _setSharedPreferenceValue(value);
     });
   }
 
-  void setSharedPreferenceValue(dynamic value) async {
+  void _setSharedPreferenceValue(dynamic value) async {
     await _preferenceManager.setString(
         PreferenceManager.accessToken, value.accessToken!);
     await _preferenceManager.setString(
@@ -53,10 +54,17 @@ class LoginController extends GetxController {
     Log.debug("Access token : $access");
     Log.debug("Refresh token : $refresh");
     isLoginSuccessful(true);
+    _goToHomeView();
   }
 
   void clearSharedPreferenceValue() async {
-    _preferenceManager.remove(PreferenceManager.accessToken);
-    _preferenceManager.remove(PreferenceManager.refreshToken);
+    await _preferenceManager.remove(PreferenceManager.accessToken);
+    await _preferenceManager.remove(PreferenceManager.refreshToken);
+  }
+
+  void _goToHomeView() {
+    if (isLoginSuccessful.isTrue) {
+      Get.toNamed(Routes.HOME);
+    }
   }
 }
