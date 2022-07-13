@@ -63,7 +63,7 @@ class AuthRemoteSourceImpl extends BaseRemoteSource
   }
 
   UserProfile _parseUserProfile(Response<dynamic>response) {
-    return UserProfile.fromJson(response);
+    return UserProfile.fromJson(response.data);
   }
 
 
