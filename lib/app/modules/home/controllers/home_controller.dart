@@ -10,6 +10,8 @@ class HomeController extends GetxController {
   final PreferenceManager _preferenceManager =
       Get.find(tag: (PreferenceManager).toString());
 
+  RxString name = "".obs;
+
   final count = 0.obs;
 
   @override
@@ -22,24 +24,6 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  void getProfile() async {
-    UserProfile? profile = await _authRepository.userProfile();
-    if (profile.detail?.id != null) {
-      await _preferenceManager.setString(
-          PreferenceManager.email, profile.detail!.email.toString());
-      await _preferenceManager.setString(
-          PreferenceManager.name, profile.detail!.name.toString());
-    }
-    printData();
-  }
-
-  void printData() async {
-    String name = await _preferenceManager.getString(PreferenceManager.name);
-    String email = await _preferenceManager.getString(PreferenceManager.email);
-    Log.debug("Fetching user profile from preference");
-    Log.debug("name : $name");
-    Log.debug("email : $email");
-  }
 
   @override
   void onClose() {}
