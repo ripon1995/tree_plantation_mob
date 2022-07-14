@@ -72,9 +72,9 @@ class LoginController extends GetxController {
   void getProfile() async {
     UserProfile? profile = await _authRepository.userProfile();
     if (profile.detail?.id != null) {
-      await _preferenceManager.setString(
+      _preferenceManager.setString(
           PreferenceManager.email, profile.detail!.email.toString());
-      await _preferenceManager.setString(
+      _preferenceManager.setString(
           PreferenceManager.name, profile.detail!.name.toString());
 
       _goToHomeView();
