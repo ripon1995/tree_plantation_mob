@@ -1,6 +1,6 @@
 abstract class PreferenceManager {
   static const keyToken = "token";
-  static const String databaseName = "user_data";
+  static const String databaseName = "tree_plantation_data";
   static const String accessToken = "accessToken";
   static const String refreshToken = "refreshToken";
 
