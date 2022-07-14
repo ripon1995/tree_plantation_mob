@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
-import 'package:tree_plantation_mobile/app/data/model/response/user_profile.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
-import 'package:tree_plantation_mobile/app/log.dart';
 
 class HomeController extends GetxController {
   final AuthRepository _authRepository =
@@ -24,6 +22,9 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
+  void getProfileName() {
+    name(_preferenceManager.getString(PreferenceManager.name));
+  }
 
   @override
   void onClose() {}
