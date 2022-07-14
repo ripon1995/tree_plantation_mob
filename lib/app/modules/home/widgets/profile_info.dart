@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tree_plantation_mobile/app/modules/home/controllers/home_controller.dart';
 
 Widget profileInfo() {
+  HomeController _controller = Get.find();
+  _controller.getProfileName();
   return Container(
     margin: EdgeInsets.only(left: 20, right: 20),
     child: Row(
@@ -23,7 +27,7 @@ Widget profileInfo() {
                     color: Colors.black,
                   )),
               Text(
-                "Customer Name",
+                _controller.name.value,
                 style: GoogleFonts.lato(fontSize: 22),
               )
             ],
