@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
 import 'package:tree_plantation_mobile/app/data/model/request/login_request.dart';
+import 'package:tree_plantation_mobile/app/data/model/response/user_profile.dart';
 import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
 import 'package:tree_plantation_mobile/app/log.dart';
 import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
@@ -54,7 +55,7 @@ class LoginController extends GetxController {
     Log.debug("Access token : $access");
     Log.debug("Refresh token : $refresh");
     isLoginSuccessful(true);
-    _goToHomeView();
+    getProfile();
   }
 
   void clearSharedPreferenceValue() async {
@@ -66,5 +67,26 @@ class LoginController extends GetxController {
     if (isLoginSuccessful.isTrue) {
       Get.toNamed(Routes.HOME);
     }
+  }
+
+  void getProfile() async {
+    UserProfile? profile = await _authRepository.userProfile();
+    if (profile.detail?.id != null) {
+      await _preferenceManager.setString(
+          PreferenceManager.email, profile.detail!.email.toString());
+      await _preferenceManager.setString(
+          PreferenceManager.name, profile.detail!.name.toString());
+
+      _goToHomeView();
+    }
+    _printData();
+  }
+
+  void _printData() async {
+    String n = await _preferenceManager.getString(PreferenceManager.name);
+    String e = await _preferenceManager.getString(PreferenceManager.email);
+    Log.debug("Fetching user profile from preference");
+    Log.debug("name : $n");
+    Log.debug("email : $e");
   }
 }
