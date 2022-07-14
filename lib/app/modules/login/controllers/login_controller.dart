@@ -43,13 +43,13 @@ class LoginController extends GetxController {
     });
   }
 
-  void _setSharedPreferenceValue(dynamic value) async {
-    await _preferenceManager.setString(
+  void _setSharedPreferenceValue(dynamic value) {
+     _preferenceManager.setString(
         PreferenceManager.accessToken, value.accessToken!);
-    await _preferenceManager.setString(
+     _preferenceManager.setString(
         PreferenceManager.refreshToken, value.refreshToken!);
-    dynamic access = await _preferenceManager.getString("accessToken");
-    dynamic refresh = await _preferenceManager.getString("refreshToken");
+    dynamic access = _preferenceManager.getString("accessToken");
+    dynamic refresh = _preferenceManager.getString("refreshToken");
     Log.debug("Token saved in preference manager");
     Log.debug("Access token : $access");
     Log.debug("Refresh token : $refresh");
@@ -57,9 +57,9 @@ class LoginController extends GetxController {
     _goToHomeView();
   }
 
-  void clearSharedPreferenceValue() async {
-    await _preferenceManager.remove(PreferenceManager.accessToken);
-    await _preferenceManager.remove(PreferenceManager.refreshToken);
+  void clearSharedPreferenceValue() {
+     _preferenceManager.remove(PreferenceManager.accessToken);
+     _preferenceManager.remove(PreferenceManager.refreshToken);
   }
 
   void _goToHomeView() {
