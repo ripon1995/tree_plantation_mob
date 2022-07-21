@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tree_plantation_mobile/app/log.dart';
 import 'package:tree_plantation_mobile/app/modules/home/controllers/home_controller.dart';
 
 Widget profileInfo() {
@@ -12,8 +13,13 @@ Widget profileInfo() {
       children: [
         InkWell(
             child: CircleAvatar(backgroundColor: Colors.blue, radius: 30),
-            onTap: () {
-              print("Tapped");
+            onTap: () async {
+              await _controller.getFromGallery().then((value) {
+                if(value) {
+                  Log.debug(_controller.chosenImage!.path.toString());
+                  _controller.uploadProfilePicture();
+                }
+              } );
             }),
         Container(
           margin: EdgeInsets.only(left: 10),
