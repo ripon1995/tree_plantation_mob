@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "872950012239",
+    "project_id": "tree-plantation-692f8",
+    "storage_bucket": "tree-plantation-692f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872950012239:android:591a2a8001934d98ac8d3a",
+        "android_client_info": {
+          "package_name": "com.rootless.tree_plantation_mob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872950012239-i2nbacos4ldv7oeof5rvu70ub1l2huvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLDgXa1SZorx8KgLZWmDOlCAx7Y0Y67jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872950012239-i2nbacos4ldv7oeof5rvu70ub1l2huvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
