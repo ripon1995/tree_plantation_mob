@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tree_plantation_mobile/app/modules/home/controllers/home_controller.dart';
-
+import 'package:tree_plantation_mobile/app/modules/home/widgets/horizontal_list_view.dart';
+import 'package:tree_plantation_mobile/app/modules/home/widgets/profile_info.dart';
 
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text(
-          'Welcome Home',
-          style: TextStyle(fontSize: 20),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            profileInfo(),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Text("All Trees",
+                  style: GoogleFonts.lato(
+                      fontWeight: FontWeight.bold, fontSize: 30)),
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.only(left: 20),
+            ),
+            horizontalListView(context),
+          ],
         ),
       ),
     );

@@ -3,6 +3,11 @@ abstract class PreferenceManager {
   static const String databaseName = "tree_plantation_data";
   static const String accessToken = "accessToken";
   static const String refreshToken = "refreshToken";
+  static const String userId = "userId";
+  static const String userName = "userName";
+  static const String name = "name";
+  static const String email = "email";
+  static const String phone = "phone";
 
   String getString(String key, {String defaultValue = ""});
 
