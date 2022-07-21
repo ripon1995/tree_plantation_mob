@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Tree plantation needs to access Gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Tree plantation needs to access Camera</string>
 	<key>CFBundleDisplayName</key>
 	<string>Tree Plantation Mob</string>
 	<key>CFBundleExecutable</key>
