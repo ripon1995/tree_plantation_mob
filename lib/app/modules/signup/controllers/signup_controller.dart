@@ -33,7 +33,6 @@ class SignupController extends GetxController {
 
   void increment() => count.value++;
 
-  // get input values for signup
   void signup() {
     String name = nameController.text.toString();
     String username = usernameController.text.toString();
