@@ -45,9 +45,9 @@ class LoginController extends GetxController {
   }
 
   void _setSharedPreferenceValue(dynamic value) {
-     _preferenceManager.setString(
+    _preferenceManager.setString(
         PreferenceManager.accessToken, value.accessToken!);
-     _preferenceManager.setString(
+    _preferenceManager.setString(
         PreferenceManager.refreshToken, value.refreshToken!);
     dynamic access = _preferenceManager.getString("accessToken");
     dynamic refresh = _preferenceManager.getString("refreshToken");
@@ -59,8 +59,8 @@ class LoginController extends GetxController {
   }
 
   void clearSharedPreferenceValue() {
-     _preferenceManager.remove(PreferenceManager.accessToken);
-     _preferenceManager.remove(PreferenceManager.refreshToken);
+    _preferenceManager.remove(PreferenceManager.accessToken);
+    _preferenceManager.remove(PreferenceManager.refreshToken);
   }
 
   void _goToHomeView() {
@@ -72,21 +72,29 @@ class LoginController extends GetxController {
   void getProfile() async {
     UserProfile? profile = await _authRepository.userProfile();
     if (profile.detail?.id != null) {
-      _preferenceManager.setString(
-          PreferenceManager.email, profile.detail!.email.toString());
-      _preferenceManager.setString(
-          PreferenceManager.name, profile.detail!.name.toString());
-
+      saveDataInPreferenceManager(profile);
       _goToHomeView();
     }
     _printData();
   }
 
+  void saveDataInPreferenceManager(UserProfile profile) {
+    _preferenceManager.setString(
+        PreferenceManager.email, profile.detail!.email.toString());
+    _preferenceManager.setString(
+        PreferenceManager.name, profile.detail!.name.toString());
+    _preferenceManager.setString(
+        PreferenceManager.userId, profile.detail!.id.toString());
+    Log.debug("Profile saved in Preference manager");
+  }
+
   void _printData() async {
     String n = await _preferenceManager.getString(PreferenceManager.name);
     String e = await _preferenceManager.getString(PreferenceManager.email);
+    String i = await _preferenceManager.getString(PreferenceManager.userId);
     Log.debug("Fetching user profile from preference");
     Log.debug("name : $n");
     Log.debug("email : $e");
+    Log.debug("id : $i");
   }
 }
