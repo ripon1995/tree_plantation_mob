@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
 import 'package:tree_plantation_mobile/app/data/model/request/login_request.dart';
 import 'package:tree_plantation_mobile/app/data/model/response/user_profile.dart';
-import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth-repo/auth_repository.dart';
 import 'package:tree_plantation_mobile/app/log.dart';
 import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
 
@@ -40,11 +40,11 @@ class LoginController extends GetxController {
     LoginRequest loginRequest = LoginRequest(email, password);
     var loginResponse = _authRepository.login(loginRequest);
     loginResponse.then((value) async {
-      _setSharedPreferenceValue(value);
+      _setTokenInSharedPreference(value);
     });
   }
 
-  void _setSharedPreferenceValue(dynamic value) {
+  void _setTokenInSharedPreference(dynamic value) {
     _preferenceManager.setString(
         PreferenceManager.accessToken, value.accessToken!);
     _preferenceManager.setString(
@@ -72,13 +72,13 @@ class LoginController extends GetxController {
   void getProfile() async {
     UserProfile? profile = await _authRepository.userProfile();
     if (profile.detail?.id != null) {
-      saveDataInPreferenceManager(profile);
+      saveProfileDetailInSharedPreference(profile);
       _goToHomeView();
     }
     _printData();
   }
 
-  void saveDataInPreferenceManager(UserProfile profile) {
+  void saveProfileDetailInSharedPreference(UserProfile profile) {
     _preferenceManager.setString(
         PreferenceManager.email, profile.detail!.email.toString());
     _preferenceManager.setString(
