@@ -9,7 +9,7 @@ class ProfileDetailResponse {
 
   ProfileDetailResponse.fromJson(dynamic json) {
     message = json['message'];
-    data = json['data'];
+    data = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
