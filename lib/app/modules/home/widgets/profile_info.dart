@@ -6,21 +6,32 @@ import 'package:tree_plantation_mobile/app/modules/home/controllers/home_control
 
 Widget profileInfo() {
   HomeController _controller = Get.find();
-  _controller.getProfileName();
+  _controller.getProfileData();
   return Container(
     margin: EdgeInsets.only(left: 20, right: 20),
     child: Row(
       children: [
-        InkWell(
-            child: CircleAvatar(backgroundColor: Colors.blue, radius: 30),
-            onTap: () async {
-              await _controller.getFromGallery().then((value) {
-                if(value) {
-                  Log.debug(_controller.chosenImage!.path.toString());
-                  _controller.uploadProfilePicture();
-                }
-              } );
-            }),
+        Obx(() {
+          return InkWell(
+              child: CircleAvatar(
+                backgroundColor: Colors.green,
+                radius: 32,
+                child: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(_controller.profileImageDownloadUrl.value),
+                  backgroundColor: Colors.white,
+                  radius: 30,
+                ),
+              ),
+              onTap: () {
+                _controller.getFromGallery().then((value) {
+                  if (value) {
+                    Log.debug(_controller.chosenImage.value!.path.toString());
+                    _controller.uploadProfilePicture();
+                  }
+                });
+              });
+        }),
         Container(
           margin: EdgeInsets.only(left: 10),
           child: Column(
@@ -32,10 +43,12 @@ Widget profileInfo() {
                     fontSize: 17,
                     color: Colors.black,
                   )),
-              Text(
-                _controller.name.value,
-                style: GoogleFonts.lato(fontSize: 22),
-              )
+              Obx(() {
+                return Text(
+                  _controller.name.value,
+                  style: GoogleFonts.lato(fontSize: 22),
+                );
+              })
             ],
           ),
         )

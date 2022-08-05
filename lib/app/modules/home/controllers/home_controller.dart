@@ -5,17 +5,24 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
-import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
+import 'package:tree_plantation_mobile/app/data/model/request/profile_details_request.dart';
+import 'package:tree_plantation_mobile/app/data/model/response/user_profile.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth-repo/auth_repository.dart';
+import 'package:tree_plantation_mobile/app/data/repository/profile-detail-repo/profile_detail_repository.dart';
 import 'package:tree_plantation_mobile/app/log.dart';
 
 class HomeController extends GetxController {
   final AuthRepository _authRepository =
       Get.find(tag: (AuthRepository).toString());
+  final ProfileDetailRepository _profileDetailRepository =
+      Get.find(tag: (ProfileDetailRepository).toString());
   final PreferenceManager _preferenceManager =
       Get.find(tag: (PreferenceManager).toString());
 
   RxString name = "".obs;
-  File? chosenImage;
+  RxInt id = 0.obs;
+  RxString profileImageDownloadUrl = "".obs;
+  Rxn<File> chosenImage = Rxn<File>();
 
   @override
   void onInit() {
@@ -27,12 +34,20 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  void getProfileName() {
-    name(_preferenceManager.getString(PreferenceManager.name));
+  void getProfileId() {
+    id(_preferenceManager.getInt(PreferenceManager.userId));
   }
 
   @override
   void onClose() {}
+
+  void getProfileData() {
+    _fetchCustomerProfile();
+
+    if(_preferenceManager.getBool(PreferenceManager.profileDetailsCreated)) {
+      _fetchCustomerProfileDetails();
+    }
+  }
 
   Future<bool> getFromGallery() async {
     try {
@@ -46,7 +61,7 @@ class HomeController extends GetxController {
 
         return false;
       }
-      chosenImage = File(image.path);
+      chosenImage.value = File(image.path);
 
       return true;
     } on PlatformException catch (e) {
@@ -57,15 +72,98 @@ class HomeController extends GetxController {
   }
 
   Future uploadProfilePicture() async {
+    String downloadUrl="";
+    Log.debug("Uploading in firebase....");
     final imagesRef = FirebaseStorage.instance.ref().child(
         "profile_image/${_preferenceManager.getString(PreferenceManager.name)}");
-    File file = File(chosenImage!.path);
+    File file = File(chosenImage.value!.path);
     try {
       await imagesRef.putFile(file);
-      String downloadUrl = await imagesRef.getDownloadURL();
+      downloadUrl = await imagesRef.getDownloadURL();
+
       Log.debug(downloadUrl);
     } on FirebaseException catch (e) {
       Log.debug("Error : $e");
     }
+    Log.debug("Uploading done in firebase....");
+    Log.debug("Creating profile detail...");
+    _preferenceManager.getBool(PreferenceManager.profileDetailsCreated)
+        ? _updateProfileDetails(downloadUrl)
+        : _createProfileDetails(downloadUrl);
   }
+
+  Future<void> _createProfileDetails(String downloadUrl) async {
+    ProfileDetailRequest profileDetailRequest =
+        ProfileDetailRequest(downloadUrl);
+    await _profileDetailRepository
+        .createProfileDetail(profileDetailRequest)
+        .then((value) {
+      // _preferenceManager.setString(PreferenceManager.profilePictureLink,
+      //     value.data!.profile_picture_link!);
+      _preferenceManager.setInt(
+          PreferenceManager.userDetailId, value.data!.id!);
+    });
+    Log.debug("Creating profile detail done...");
+    _preferenceManager.setBool(PreferenceManager.profileDetailsCreated, true);
+  }
+
+  Future<void> _updateProfileDetails(String downloadUrl) async {
+    ProfileDetailRequest profileDetailRequest =
+        ProfileDetailRequest(downloadUrl);
+    int userDetailId =
+        _preferenceManager.getInt(PreferenceManager.userDetailId);
+    await _profileDetailRepository.updateProfileDetail(
+        profileDetailRequest, userDetailId);
+    _fetchCustomerProfileDetails();
+  }
+
+  void _fetchCustomerProfile() {
+    Log.debug("Fetching profile data...");
+    _getProfile();
+  }
+
+
+  void _fetchCustomerProfileDetails() {
+    Log.debug("Fetching profile details...");
+    _getProfileDetails();
+  }
+
+  void _getProfile() async {
+    UserProfile? profile = await _authRepository.userProfile();
+    if (profile.detail?.id != null) {
+      _saveProfileInSharedPreference(profile);
+    }
+    Log.debug("Fetching profile data done...");
+  }
+
+  void _saveProfileInSharedPreference(UserProfile profile) {
+    _preferenceManager.setString(
+        PreferenceManager.email, profile.detail!.email.toString());
+    _preferenceManager.setString(
+        PreferenceManager.name, profile.detail!.name.toString());
+    name(profile.detail!.name.toString());
+    _preferenceManager.setInt(PreferenceManager.userId, profile.detail!.id!);
+    Log.debug("Profile saved in Preference manager");
+  }
+
+  void _getProfileDetails() async {
+    int id = _preferenceManager.getInt(PreferenceManager.userDetailId);
+    await _profileDetailRepository.fetchProfileDetail(id).then((response) {
+      // _preferenceManager.setString(PreferenceManager.profilePictureLink,
+      //     response.data!.profile_picture_link!);
+      profileImageDownloadUrl(response.data!.profile_picture_link);
+    });
+    Log.debug("Fetching profile details done...");
+  }
+
+  void _printData() async {
+    String n = await _preferenceManager.getString(PreferenceManager.name);
+    String e = await _preferenceManager.getString(PreferenceManager.email);
+    int i = await _preferenceManager.getInt(PreferenceManager.userId);
+    Log.debug("Fetching user profile from preference");
+    Log.debug("name : $n");
+    Log.debug("email : $e");
+    Log.debug("id : $i");
+  }
+
 }

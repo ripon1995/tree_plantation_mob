@@ -8,6 +8,9 @@ abstract class PreferenceManager {
   static const String name = "name";
   static const String email = "email";
   static const String phone = "phone";
+  static const String userDetailId = "userDetailId";
+  static const String profilePictureLink = "profilePictureLink";
+  static const String profileDetailsCreated = "profileDetailsCreated";
 
   String getString(String key, {String defaultValue = ""});
 

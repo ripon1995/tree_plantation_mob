@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
 import 'package:tree_plantation_mobile/app/data/model/request/sign_up_request.dart';
-import 'package:tree_plantation_mobile/app/data/repository/auth_repository.dart';
-import 'package:tree_plantation_mobile/app/data/repository/auth_repository_impl.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth-repo/auth_repository.dart';
+import 'package:tree_plantation_mobile/app/data/repository/auth-repo/auth_repository_impl.dart';
 import 'package:tree_plantation_mobile/app/routes/app_pages.dart';
 
 class SignupController extends GetxController {
+  PreferenceManager _preferenceManager =
+      Get.find(tag: (PreferenceManager).toString());
   final count = 0.obs;
   RxBool isSignUpSuccessful = false.obs;
 
@@ -46,14 +49,16 @@ class SignupController extends GetxController {
     var signUpResponse = _authRepository.signUp(signUpRequest);
     signUpResponse.then((value) {
       // if the registration is successful then it will show the snack bar and navigate to the login page
-      if (value.message == "success"){
+      if (value.message == "success") {
         Get.snackbar("Congratulation", "Registration Successful",
             snackPosition: SnackPosition.BOTTOM);
         Get.toNamed(Routes.LOGIN);
+      } else if (value.message == "fail") {
+        Get.snackbar("Invalidate data!", "Registration failed",
+            snackPosition: SnackPosition.BOTTOM);
       }
-      else if(value.message == "fail"){
-        Get.snackbar("Invalidate data!", "Registration failed",snackPosition: SnackPosition.BOTTOM);
-      }
+      _preferenceManager.setBool(
+          PreferenceManager.profileDetailsCreated, false);
     });
     print(name);
   }
