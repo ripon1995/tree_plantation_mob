@@ -80,41 +80,49 @@ class HomeController extends GetxController {
     try {
       await imagesRef.putFile(file);
       downloadUrl = await imagesRef.getDownloadURL();
-
       Log.debug(downloadUrl);
+      Log.debug("Uploading done in firebase....");
+      _showSnackMessage("Wow!", "Profile image changed successfully");
+      _preferenceManager.getBool(PreferenceManager.profileDetailsCreated)
+          ? _updateProfileDetails(downloadUrl)
+          : _createProfileDetails(downloadUrl);
     } on FirebaseException catch (e) {
+      _showSnackMessage("Oops!", "Please try again...");
+      Log.debug("Uploading failed in firebase...");
       Log.debug("Error : $e");
     }
-    Log.debug("Uploading done in firebase....");
-    Log.debug("Creating profile detail...");
-    _preferenceManager.getBool(PreferenceManager.profileDetailsCreated)
-        ? _updateProfileDetails(downloadUrl)
-        : _createProfileDetails(downloadUrl);
   }
 
   Future<void> _createProfileDetails(String downloadUrl) async {
+    Log.debug("Creating profile detail...");
     ProfileDetailRequest profileDetailRequest =
         ProfileDetailRequest(downloadUrl);
     await _profileDetailRepository
         .createProfileDetail(profileDetailRequest)
         .then((value) {
-      // _preferenceManager.setString(PreferenceManager.profilePictureLink,
-      //     value.data!.profile_picture_link!);
       _preferenceManager.setInt(
           PreferenceManager.userDetailId, value.data!.id!);
+      _preferenceManager.setBool(PreferenceManager.profileDetailsCreated, true);
+      Log.debug("Creating profile detail done...");
+      _fetchCustomerProfileDetails();
     });
-    Log.debug("Creating profile detail done...");
-    _preferenceManager.setBool(PreferenceManager.profileDetailsCreated, true);
+
   }
 
   Future<void> _updateProfileDetails(String downloadUrl) async {
+    Log.debug("Updating profile detail...");
     ProfileDetailRequest profileDetailRequest =
         ProfileDetailRequest(downloadUrl);
     int userDetailId =
         _preferenceManager.getInt(PreferenceManager.userDetailId);
     await _profileDetailRepository.updateProfileDetail(
         profileDetailRequest, userDetailId);
+    Log.debug("Updaing profile detail done");
     _fetchCustomerProfileDetails();
+  }
+
+  void _showSnackMessage(String title,String message) {
+    Get.snackbar(title, message);
   }
 
   void _fetchCustomerProfile() {
@@ -132,8 +140,11 @@ class HomeController extends GetxController {
     UserProfile? profile = await _authRepository.userProfile();
     if (profile.detail?.id != null) {
       _saveProfileInSharedPreference(profile);
+      Log.debug("Fetching profile data done...");
     }
-    Log.debug("Fetching profile data done...");
+    else {
+      Log.debug("Fetching profile data is failed...");
+    }
   }
 
   void _saveProfileInSharedPreference(UserProfile profile) {
@@ -143,17 +154,15 @@ class HomeController extends GetxController {
         PreferenceManager.name, profile.detail!.name.toString());
     name(profile.detail!.name.toString());
     _preferenceManager.setInt(PreferenceManager.userId, profile.detail!.id!);
-    Log.debug("Profile saved in Preference manager");
+    Log.debug("Profile saved in Preference manager successfully...");
   }
 
   void _getProfileDetails() async {
     int id = _preferenceManager.getInt(PreferenceManager.userDetailId);
     await _profileDetailRepository.fetchProfileDetail(id).then((response) {
-      // _preferenceManager.setString(PreferenceManager.profilePictureLink,
-      //     response.data!.profile_picture_link!);
       profileImageDownloadUrl(response.data!.profile_picture_link);
+      Log.debug("Fetching profile details done...");
     });
-    Log.debug("Fetching profile details done...");
   }
 
   void _printData() async {
