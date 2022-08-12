@@ -6,6 +6,7 @@ import 'package:tree_plantation_mobile/flavors/env_config.dart';
 import 'package:tree_plantation_mobile/flavors/environment.dart';
 
 import 'firebase_options.dart';
+import 'package:firebase_performance/firebase_performance.dart';
 
 void main() async{
   EnvConfig devConfig = EnvConfig(
@@ -22,5 +23,6 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebasePerformance performance = FirebasePerformance.instance;
   runApp(const MyApp());
 }

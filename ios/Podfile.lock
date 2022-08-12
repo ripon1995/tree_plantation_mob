@@ -1,31 +1,60 @@
 PODS:
   - Firebase/CoreOnly (9.2.0):
     - FirebaseCore (= 9.2.0)
+  - Firebase/Performance (9.2.0):
+    - Firebase/CoreOnly
+    - FirebasePerformance (~> 9.2.0)
   - Firebase/Storage (9.2.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 9.2.0)
   - firebase_core (1.19.2):
     - Firebase/CoreOnly (= 9.2.0)
     - Flutter
+  - firebase_performance (0.8.2-2):
+    - Firebase/Performance (= 9.2.0)
+    - firebase_core
+    - Flutter
   - firebase_storage (10.3.2):
     - Firebase/Storage (= 9.2.0)
     - firebase_core
     - Flutter
-  - FirebaseAppCheckInterop (9.3.0)
-  - FirebaseAuthInterop (9.3.0)
+  - FirebaseABTesting (9.4.0):
+    - FirebaseCore (~> 9.0)
+  - FirebaseAppCheckInterop (9.4.0)
+  - FirebaseAuthInterop (9.4.0)
   - FirebaseCore (9.2.0):
     - FirebaseCoreDiagnostics (~> 9.0)
     - FirebaseCoreInternal (~> 9.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (9.3.0):
+  - FirebaseCoreDiagnostics (9.4.0):
     - GoogleDataTransport (< 10.0.0, >= 9.1.4)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - FirebaseCoreExtension (9.3.0):
+  - FirebaseCoreExtension (9.4.0):
     - FirebaseCore (~> 9.0)
-  - FirebaseCoreInternal (9.3.0):
+  - FirebaseCoreInternal (9.4.0):
+    - "GoogleUtilities/NSData+zlib (~> 7.7)"
+  - FirebaseInstallations (9.4.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - PromisesObjC (~> 2.1)
+  - FirebasePerformance (9.2.0):
+    - FirebaseCore (~> 9.0)
+    - FirebaseInstallations (~> 9.0)
+    - FirebaseRemoteConfig (~> 9.0)
+    - GoogleDataTransport (< 10.0.0, >= 9.1.4)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/ISASwizzler (~> 7.7)
+    - GoogleUtilities/MethodSwizzler (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FirebaseRemoteConfig (9.4.0):
+    - FirebaseABTesting (~> 9.0)
+    - FirebaseCore (~> 9.0)
+    - FirebaseInstallations (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
   - FirebaseStorage (9.2.0):
     - FirebaseAppCheckInterop (~> 9.0)
@@ -33,19 +62,24 @@ PODS:
     - FirebaseCore (~> 9.0)
     - FirebaseCoreExtension (~> 9.0)
     - FirebaseStorageInternal (~> 9.0)
-  - FirebaseStorageInternal (9.3.0):
+  - FirebaseStorageInternal (9.4.0):
     - FirebaseCore (~> 9.0)
     - GTMSessionFetcher/Core (< 3.0, >= 1.7)
   - Flutter (1.0.0)
-  - GoogleDataTransport (9.1.4):
+  - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Environment (7.7.0):
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/ISASwizzler (7.7.0)
   - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (7.7.0):
+    - GoogleUtilities/Logger
   - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/UserDefaults (7.7.0):
+    - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (2.0.0)
   - image_picker_ios (0.0.1):
     - Flutter
@@ -64,6 +98,7 @@ PODS:
 
 DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_performance (from `.symlinks/plugins/firebase_performance/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
@@ -74,12 +109,16 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Firebase
+    - FirebaseABTesting
     - FirebaseAppCheckInterop
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseInstallations
+    - FirebasePerformance
+    - FirebaseRemoteConfig
     - FirebaseStorage
     - FirebaseStorageInternal
     - GoogleDataTransport
@@ -91,6 +130,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_performance:
+    :path: ".symlinks/plugins/firebase_performance/ios"
   firebase_storage:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
@@ -107,17 +148,22 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
   firebase_core: ada8be870601fe3c2684dae2356f634189bd598f
+  firebase_performance: 4e42bceb6443a203712686d1e5834ac36a777144
   firebase_storage: 8395cf3326eb54c0fa1a826d37ce165eb536433e
-  FirebaseAppCheckInterop: f6b9670fb1360cf12006ca426e9c3b9a35317d17
-  FirebaseAuthInterop: 79826b4edc64e1d10135947866ad4437657e8696
+  FirebaseABTesting: e59eec91fafce74a0f5261809ed0025b7e450db1
+  FirebaseAppCheckInterop: 63119cdfc94b16c3e9421513c17f597aee2ea225
+  FirebaseAuthInterop: 826d3d772b554e3675ceaab8c665008277ca9d1c
   FirebaseCore: 0e27f2a15d8f7b7ef11e7d93e23b1cbab55d748c
-  FirebaseCoreDiagnostics: 060eb57cc56dfaf40b1b1b5874a5c17c41ce79f8
-  FirebaseCoreExtension: 900b065a4970c31ce8de4e966cee910188e3a07b
-  FirebaseCoreInternal: 635d1c9a612a6502b6377a0c92af83758076ffff
+  FirebaseCoreDiagnostics: aaa87098082c4d4bdd1a9557b1186d18ca85ce8c
+  FirebaseCoreExtension: 2cf8c542b54ad3c2d4b746c22e8828b670dcd9b0
+  FirebaseCoreInternal: a13302b0088fbf5f38b79b6ece49c2af7d3e05d6
+  FirebaseInstallations: 61db1054e688d2bdc4e2b3f744c1b086e913b742
+  FirebasePerformance: 5a8d2a9e645a398dfcc02657853f4b946675d5d4
+  FirebaseRemoteConfig: 6d9982bc64548a6e3c1b497b9fa53938ad135f2d
   FirebaseStorage: b47b4a04062ab07911063571241c103a8a2a2332
-  FirebaseStorageInternal: f1a6d64cace780580d2b8ffa0a0c8cf3c376f3f8
+  FirebaseStorageInternal: 425c7dc7de44d9b7e07a9f8d6515bab0f1266b87
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
+  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GTMSessionFetcher: 681175626052e03fdde7952f7e9c7a9785719506
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
