@@ -4,10 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tree_plantation_mobile/app/modules/home/controllers/home_controller.dart';
 import 'package:tree_plantation_mobile/app/modules/home/widgets/horizontal_list_view.dart';
 import 'package:tree_plantation_mobile/app/modules/home/widgets/profile_info.dart';
+import 'package:tree_plantation_mobile/app/modules/login/controllers/login_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
+
+    final LoginController _loginController = Get.find();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -25,6 +29,8 @@ class HomeView extends GetView<HomeController> {
               margin: EdgeInsets.only(left: 20),
             ),
             horizontalListView(context),
+
+            IconButton(onPressed: ()=> _loginController.logOut(), icon: Icon(Icons.logout,size: 30,))
           ],
         ),
       ),

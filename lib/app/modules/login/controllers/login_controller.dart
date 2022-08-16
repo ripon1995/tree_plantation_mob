@@ -63,8 +63,13 @@ class LoginController extends GetxController {
     }
   }
 
+  void logOut() {
+    _clearSharedPreferenceValue();
+    Get.toNamed(Routes.LOGIN);
+  }
   void _clearSharedPreferenceValue() {
     _preferenceManager.remove(PreferenceManager.accessToken);
     _preferenceManager.remove(PreferenceManager.refreshToken);
+    _preferenceManager.clear();
   }
 }
