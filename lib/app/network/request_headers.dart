@@ -16,9 +16,10 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
 
   Future<Map<String, String>> getCustomHeaders() async {
     final accessToken =
-        await _preferenceManager.getString(PreferenceManager.accessToken) ?? "";
+        _preferenceManager.getString(PreferenceManager.accessToken);
     var customHeaders = {'content-type': 'application/json'};
-    customHeaders.addAll({'Authorization': 'Bearer $accessToken'});
+    if (accessToken.isNotEmpty)
+      customHeaders.addAll({'Authorization': 'Bearer $accessToken'});
     return customHeaders;
   }
 }
