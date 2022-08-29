@@ -21,7 +21,6 @@ dependencies:
   firebase_storage: ^10.3.2
   image_picker: ^0.8.5+3
   firebase_core: ^1.19.2
-  firebase_performance: ^0.8.2+2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

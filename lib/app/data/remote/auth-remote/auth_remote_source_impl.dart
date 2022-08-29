@@ -51,21 +51,18 @@ class AuthRemoteSourceImpl extends BaseRemoteSource
   }
 
   @override
-  Future<UserProfile> userProfile() {
+  Future<UserProfile> userProfile() async {
     var endpoint = "${DioProvider.baseUrl}/auth/users/me/";
     var dioCall = dioClient.get(endpoint);
-
     try {
-      return callApiWithErrorParser(dioCall).then((response) => _parseUserProfile(response));
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _parseUserProfile(response));
     } catch (e) {
       rethrow;
     }
   }
 
-  UserProfile _parseUserProfile(Response<dynamic>response) {
+  UserProfile _parseUserProfile(Response<dynamic> response) {
     return UserProfile.fromJson(response.data);
   }
-
-
-
 }

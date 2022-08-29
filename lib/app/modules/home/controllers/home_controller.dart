@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   RxString profileImageDownloadUrl = "".obs;
   Rxn<File> chosenImage = Rxn<File>();
 
+
   @override
   void onInit() {
     super.onInit();
@@ -41,12 +42,16 @@ class HomeController extends GetxController {
   @override
   void onClose() {}
 
-  void getProfileData() {
+  void getProfileData() async {
+    //Trace customTrace = FirebasePerformance.instance.newTrace("custom-trace");
+    //await customTrace.start();
     _fetchCustomerProfile();
 
     if(_preferenceManager.getBool(PreferenceManager.profileDetailsCreated)) {
       _fetchCustomerProfileDetails();
     }
+    //customTrace.incrementMetric("profile-data-trace-metric", 1);
+    //await customTrace.stop();
   }
 
   Future<bool> getFromGallery() async {
@@ -72,6 +77,8 @@ class HomeController extends GetxController {
   }
 
   Future uploadProfilePicture() async {
+    //Trace customTrace = FirebasePerformance.instance.newTrace("custom-trace");
+    //await customTrace.start();
     String downloadUrl="";
     Log.debug("Uploading in firebase....");
     final imagesRef = FirebaseStorage.instance.ref().child(
@@ -91,6 +98,8 @@ class HomeController extends GetxController {
       Log.debug("Uploading failed in firebase...");
       Log.debug("Error : $e");
     }
+    //customTrace.incrementMetric("profile-image-upload", 1);
+    //await customTrace.stop();
   }
 
   Future<void> _createProfileDetails(String downloadUrl) async {
@@ -110,6 +119,8 @@ class HomeController extends GetxController {
   }
 
   Future<void> _updateProfileDetails(String downloadUrl) async {
+    //Trace customTrace = FirebasePerformance.instance.newTrace("custom-trace");
+    //await customTrace.start();
     Log.debug("Updating profile detail...");
     ProfileDetailRequest profileDetailRequest =
         ProfileDetailRequest(downloadUrl);
@@ -119,6 +130,7 @@ class HomeController extends GetxController {
         profileDetailRequest, userDetailId);
     Log.debug("Updaing profile detail done");
     _fetchCustomerProfileDetails();
+    //await customTrace.stop();
   }
 
   void _showSnackMessage(String title,String message) {
@@ -137,6 +149,8 @@ class HomeController extends GetxController {
   }
 
   void _getProfile() async {
+    //Trace customTrace = FirebasePerformance.instance.newTrace("custom-trace");
+    //await customTrace.start();
     UserProfile? profile = await _authRepository.userProfile();
     if (profile.detail?.id != null) {
       _saveProfileInSharedPreference(profile);
@@ -145,6 +159,7 @@ class HomeController extends GetxController {
     else {
       Log.debug("Fetching profile data is failed...");
     }
+    //await customTrace.stop();
   }
 
   void _saveProfileInSharedPreference(UserProfile profile) {
@@ -158,11 +173,14 @@ class HomeController extends GetxController {
   }
 
   void _getProfileDetails() async {
+    //Trace customTrace = FirebasePerformance.instance.newTrace("custom-trace");
+    //await customTrace.start();
     int id = _preferenceManager.getInt(PreferenceManager.userDetailId);
     await _profileDetailRepository.fetchProfileDetail(id).then((response) {
       profileImageDownloadUrl(response.data!.profile_picture_link);
       Log.debug("Fetching profile details done...");
     });
+    //await customTrace.stop();
   }
 
   void _printData() async {
