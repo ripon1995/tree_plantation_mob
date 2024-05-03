@@ -4,7 +4,7 @@ import 'package:tree_plantation_mobile/app/my_app.dart';
 import 'package:tree_plantation_mobile/flavors/build_config.dart';
 import 'package:tree_plantation_mobile/flavors/env_config.dart';
 import 'package:tree_plantation_mobile/flavors/environment.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -22,5 +22,6 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   runApp(const MyApp());
 }

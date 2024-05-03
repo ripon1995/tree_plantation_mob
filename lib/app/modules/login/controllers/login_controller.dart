@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tree_plantation_mobile/app/data/local/preference/preference_manager.dart';
@@ -39,6 +40,13 @@ class LoginController extends GetxController {
     LoginRequest loginRequest = LoginRequest(email, password);
     var loginResponse = _authRepository.login(loginRequest);
     loginResponse.then((value) async {
+      await FirebaseAnalytics.instance.logEvent(
+        name: "select_content",
+        parameters: {
+          "content_type": "login_response",
+          "item_id": "login-response",
+        },
+      );
       _setTokenInSharedPreference(value);
     });
   }
@@ -71,5 +79,12 @@ class LoginController extends GetxController {
     _preferenceManager.remove(PreferenceManager.accessToken);
     _preferenceManager.remove(PreferenceManager.refreshToken);
     _preferenceManager.clear();
+  }
+
+  Future<void> testSetCurrentScreen() async {
+    await FirebaseAnalytics.instance.setCurrentScreen(
+      screenName: 'tree-plantation-login',
+      screenClassOverride: 'LoginView',
+    );
   }
 }

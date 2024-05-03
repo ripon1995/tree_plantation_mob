@@ -9,6 +9,8 @@ import 'package:tree_plantation_mobile/app/core/utils/custom_text_field.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
+    controller.testSetCurrentScreen();
+
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
