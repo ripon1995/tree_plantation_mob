@@ -17,8 +17,10 @@ Widget profileInfo() {
                 backgroundColor: Colors.green,
                 radius: 32,
                 child: CircleAvatar(
-                  backgroundImage:
-                      NetworkImage(_controller.profileImageDownloadUrl.value),
+                  backgroundImage: _controller
+                          .profileImageDownloadUrl.value.isNotEmpty
+                      ? NetworkImage(_controller.profileImageDownloadUrl.value)
+                      : Image.asset("assets/images/default_profile.png").image,
                   backgroundColor: Colors.white,
                   radius: 30,
                 ),
